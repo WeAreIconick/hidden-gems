@@ -1,30 +1,25 @@
 {
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
+  "preferredVersions": {
+    "php": "7.4",
+    "wp": "5.9"
+  },
   "steps": [
-    {
-      "step": "installWordPress",
-      "options": {
-        "admin_user": "admin",
-        "admin_password": "password",
-        "admin_email": "admin@example.com",
-        "site_title": "Hidden Gems Demo"
-      }
-    },
-    {
-      "step": "installPlugin",
-      "pluginZipFile": {
-        "resource": "url",
-        "url": "https://codeload.github.com/WeAreIconick/hidden-gems/zip/refs/heads/main"
-      }
-    },
-    {
-      "step": "runPHP",
-      "code": "activate_plugin('hidden-gems-main/hidden-gems.php');"
-    },
     {
       "step": "login",
       "username": "admin",
       "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://github.com/WeAreIconick/hidden-gems/archive/refs/heads/main.zip"
+      },
+      "options": {
+        "activate": true
+      }
     }
   ]
 }
