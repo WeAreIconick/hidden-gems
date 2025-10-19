@@ -1,22 +1,10 @@
 {
-  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-  "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
-  "preferredVersions": {
-    "php": "7.4",
-    "wp": "5.9"
-  },
-  "features": {
-    "networking": true
-  },
+  "landingPage": "/wp-admin/plugin-install.php",
   "steps": [
     {
       "step": "login",
       "username": "admin",
       "password": "password"
-    },
-    {
-      "step": "runPHP",
-      "code": "<?php\nrequire_once('/wordpress/wp-load.php');\n\n// Create plugin directory\n$plugin_dir = WP_PLUGIN_DIR . '/hidden-gems';\nif (!file_exists($plugin_dir)) {\n    mkdir($plugin_dir, 0755, true);\n}\n\n// Download main plugin file\n$plugin_content = file_get_contents('https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/hidden-gems.php');\nif ($plugin_content !== false) {\n    file_put_contents($plugin_dir . '/hidden-gems.php', $plugin_content);\n}\n\n// Download readme file\n$readme_content = file_get_contents('https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/readme.txt');\nif ($readme_content !== false) {\n    file_put_contents($plugin_dir . '/readme.txt', $readme_content);\n}\n\n// Activate plugin\n$plugin_file = 'hidden-gems/hidden-gems.php';\nif (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {\n    activate_plugin($plugin_file);\n    error_log('Hidden Gems: Plugin installed and activated successfully');\n} else {\n    error_log('Hidden Gems: Plugin file not found');\n}\n?>"
     }
   ]
 }
