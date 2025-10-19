@@ -1,0 +1,17 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "url",
+        "url": "https://github.com/WeAreIconick/hidden-gems/archive/main.zip"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n// Activate the plugin after installation\n// The plugin folder will be 'hidden-gems-main' after extraction\n$plugin_file = 'hidden-gems-main/hidden-gems.php';\nif (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {\n    activate_plugin($plugin_file);\n}\n?>"
+    }
+  ]
+}
