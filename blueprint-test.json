@@ -1,19 +1,28 @@
 {
-  "landingPage": "/wp-admin/",
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/plugins.php",
+  "preferredVersions": {
+    "php": "7.4",
+    "wp": "5.9"
+  },
+  "features": {
+    "networking": true
+  },
   "steps": [
-    {
-      "step": "installWordPress",
-      "options": {
-        "admin_user": "admin",
-        "admin_password": "password",
-        "admin_email": "admin@example.com",
-        "site_title": "Hidden Gems Demo"
-      }
-    },
     {
       "step": "login",
       "username": "admin",
       "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "akismet"
+      },
+      "options": {
+        "activate": true
+      }
     }
   ]
 }
