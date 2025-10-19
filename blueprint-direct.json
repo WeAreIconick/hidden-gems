@@ -7,7 +7,7 @@
       "step": "installPlugin",
       "pluginZipFile": {
         "resource": "url",
-        "url": "https://github-proxy.com/proxy/?repo=WeAreIconick/hidden-gems&branch=main"
+        "url": "https://github.com/WeAreIconick/hidden-gems/archive/refs/heads/main.zip"
       },
       "options": {
         "activate": true
