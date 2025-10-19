@@ -51,12 +51,7 @@ Hidden Gems uses WordPress core functions and hooks exclusively:
 
 == Installation ==
 
-**Quick Start with WordPress Playground:**
-[![Try Hidden Gems in WordPress Playground](https://img.shields.io/badge/Try%20in%20Playground-WordPress%20Playground-blue?style=for-the-badge)](https://playground.wordpress.net/#?blueprint-url=https://github.com/WeAreIconick/hidden-gems/raw/main/blueprint.json)
-
-Click the button above to instantly try Hidden Gems in WordPress Playground - no installation required!
-
-**Manual Installation:**
+**Installation:**
 1. Upload the plugin files to the `/wp-content/plugins/hidden-gems` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Navigate to Plugins > Add New and click the "Hidden Gems" tab

@@ -4,11 +4,6 @@
 
 Discover high-quality WordPress plugins that haven't been widely adopted yet. Find hidden gems with advanced filtering and search capabilities.
 
-## 🚀 Quick Start
-
-**Try it instantly in WordPress Playground:**
-Click the button above to instantly try Hidden Gems in WordPress Playground - no installation required!
-
 ## ✨ Features
 
 - **🔍 Hidden Gem Discovery** - Find plugins with good ratings but low adoption
@@ -29,9 +24,6 @@ Click the button above to instantly try Hidden Gems in WordPress Playground - no
 - Developers researching plugin quality vs. popularity
 
 ## 📦 Installation
-
-### WordPress Playground (Recommended)
-[![Try Hidden Gems in WordPress Playground](https://img.shields.io/badge/Try%20in%20Playground-WordPress%20Playground-blue?style=for-the-badge)](https://playground.wordpress.net/#?blueprint-url=https://github.com/WeAreIconick/hidden-gems/raw/main/blueprint.json)
 
 ### Manual Installation
 1. Download the plugin files
