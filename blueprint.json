@@ -14,8 +14,12 @@
       "step": "installPlugin",
       "pluginZipFile": {
         "resource": "url",
-        "url": "https://github.com/WeAreIconick/hidden-gems/archive/refs/heads/main.zip"
+        "url": "https://codeload.github.com/WeAreIconick/hidden-gems/zip/refs/heads/main"
       }
+    },
+    {
+      "step": "runPHP",
+      "code": "activate_plugin('hidden-gems-main/hidden-gems.php');"
     },
     {
       "step": "login",

@@ -1,0 +1,19 @@
+{
+  "landingPage": "/wp-admin/",
+  "steps": [
+    {
+      "step": "installWordPress",
+      "options": {
+        "admin_user": "admin",
+        "admin_password": "password",
+        "admin_email": "admin@example.com",
+        "site_title": "Hidden Gems Demo"
+      }
+    },
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    }
+  ]
+}
