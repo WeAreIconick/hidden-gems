@@ -1,7 +1,5 @@
 # Hidden Gems WordPress Plugin
 
-[![Try Hidden Gems in WordPress Playground](https://img.shields.io/badge/Try%20in%20Playground-WordPress%20Playground-blue?style=for-the-badge)](https://playground.wordpress.net/#?blueprint-url=https://github.com/WeAreIconick/hidden-gems/raw/main/blueprint.json)
-
 Discover high-quality WordPress plugins that haven't been widely adopted yet. Find hidden gems with advanced filtering and search capabilities.
 
 ## ✨ Features
