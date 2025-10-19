@@ -1,5 +1,13 @@
 {
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
   "steps": [
     {
       "step": "login",
@@ -10,7 +18,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://github.com/WeAreIconick/hidden-gems/archive/main.zip"
+        "url": "https://github.com/WeAreIconick/hidden-gems/archive/refs/heads/main.zip"
       },
       "options": {
         "activate": true
