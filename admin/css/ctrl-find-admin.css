@@ -1,0 +1,256 @@
+/**
+ * Ctrl+Find Admin Styles
+ * 
+ * Extends WordPress admin styles for the plugin filter interface
+ */
+
+/* Filter container */
+.ctrl-find-filters {
+	margin: 20px 0;
+	padding: 15px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Filter form */
+.ctrl-find-filter-form {
+	margin: 0;
+}
+
+/* Filter row */
+.ctrl-find-filter-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+	align-items: end;
+	margin-bottom: 10px;
+}
+
+/* Filter group */
+.ctrl-find-filter-group {
+	display: flex;
+	flex-direction: column;
+	min-width: 120px;
+}
+
+.ctrl-find-filter-group label {
+	font-weight: 600;
+	margin-bottom: 5px;
+	color: #1d2327;
+	font-size: 13px;
+}
+
+.ctrl-find-filter-group input,
+.ctrl-find-filter-group select {
+	width: 100%;
+	padding: 6px 8px;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
+	font-size: 13px;
+	line-height: 1.4;
+	background: #fff;
+	color: #2c3338;
+}
+
+.ctrl-find-filter-group input:focus,
+.ctrl-find-filter-group select:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: 2px solid transparent;
+}
+
+/* Checkbox styling */
+.ctrl-find-filter-group input[type="checkbox"] {
+	width: auto;
+	margin-right: 5px;
+}
+
+.ctrl-find-filter-group label:has(input[type="checkbox"]) {
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+/* Filter actions */
+.ctrl-find-filter-actions {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-left: auto;
+}
+
+.ctrl-find-filter-actions .button {
+	height: auto;
+	padding: 6px 12px;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+/* Active filters indicator */
+.ctrl-find-active-filters {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid #c3c4c7;
+}
+
+.ctrl-find-active-filters h4 {
+	margin: 0 0 8px 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.ctrl-find-filter-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.ctrl-find-filter-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 8px;
+	background: #f0f0f1;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	font-size: 12px;
+	color: #2c3338;
+}
+
+.ctrl-find-filter-tag .remove {
+	margin-left: 5px;
+	color: #d63638;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.ctrl-find-filter-tag .remove:hover {
+	color: #a00;
+}
+
+/* Loading state */
+.ctrl-find-loading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.ctrl-find-loading::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20px;
+	height: 20px;
+	margin: -10px 0 0 -10px;
+	border: 2px solid #f3f3f3;
+	border-top: 2px solid #2271b1;
+	border-radius: 50%;
+	animation: ctrl-find-spin 1s linear infinite;
+}
+
+@keyframes ctrl-find-spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* Results count */
+.ctrl-find-results-count {
+	margin: 10px 0;
+	font-size: 13px;
+	color: #646970;
+	font-style: italic;
+}
+
+/* Responsive design */
+@media screen and (max-width: 782px) {
+	.ctrl-find-filter-row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	
+	.ctrl-find-filter-group {
+		min-width: auto;
+		width: 100%;
+	}
+	
+	.ctrl-find-filter-actions {
+		margin-left: 0;
+		margin-top: 10px;
+		justify-content: center;
+	}
+	
+	.ctrl-find-filter-actions .button {
+		flex: 1;
+		max-width: 150px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.ctrl-find-filters {
+		margin: 10px 0;
+		padding: 10px;
+	}
+	
+	.ctrl-find-filter-row {
+		gap: 10px;
+	}
+	
+	.ctrl-find-filter-group {
+		min-width: auto;
+	}
+}
+
+/* WordPress admin color scheme compatibility */
+.admin-color-light .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-blue .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-coffee .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-ectoplasm .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-midnight .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-ocean .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+.admin-color-sunrise .ctrl-find-filters {
+	border-color: #c3c4c7;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	.ctrl-find-filters {
+		border-width: 2px;
+	}
+	
+	.ctrl-find-filter-group input,
+	.ctrl-find-filter-group select {
+		border-width: 2px;
+	}
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	.ctrl-find-loading::after {
+		animation: none;
+	}
+	
+	@keyframes ctrl-find-spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(0deg); }
+	}
+}

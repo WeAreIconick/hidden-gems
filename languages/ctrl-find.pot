@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ctrl+Find 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ctrl-find\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ctrl-find.php:123
+msgid "Loading..."
+msgstr ""
+
+#: ctrl-find.php:124
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: ctrl-find.php:140
+msgid "Author:"
+msgstr ""
+
+#: ctrl-find.php:141
+msgid "WordPress.org username"
+msgstr ""
+
+#: ctrl-find.php:146
+msgid "Tag:"
+msgstr ""
+
+#: ctrl-find.php:148
+msgid "All Tags"
+msgstr ""
+
+#: ctrl-find.php:155
+msgid "Min Rating:"
+msgstr ""
+
+#: ctrl-find.php:156
+msgid "Any Rating"
+msgstr ""
+
+#: ctrl-find.php:157
+msgid "4+ Stars"
+msgstr ""
+
+#: ctrl-find.php:158
+msgid "3+ Stars"
+msgstr ""
+
+#: ctrl-find.php:159
+msgid "2+ Stars"
+msgstr ""
+
+#: ctrl-find.php:164
+msgid "Min Installs:"
+msgstr ""
+
+#: ctrl-find.php:165
+msgid "Any"
+msgstr ""
+
+#: ctrl-find.php:166
+msgid "1K+"
+msgstr ""
+
+#: ctrl-find.php:167
+msgid "10K+"
+msgstr ""
+
+#: ctrl-find.php:168
+msgid "100K+"
+msgstr ""
+
+#: ctrl-find.php:169
+msgid "1M+"
+msgstr ""
+
+#: ctrl-find.php:174
+msgid "Last Updated:"
+msgstr ""
+
+#: ctrl-find.php:175
+msgid "Any Time"
+msgstr ""
+
+#: ctrl-find.php:176
+msgid "Last 30 days"
+msgstr ""
+
+#: ctrl-find.php:177
+msgid "Last 90 days"
+msgstr ""
+
+#: ctrl-find.php:178
+msgid "Last year"
+msgstr ""
+
+#: ctrl-find.php:183
+msgid "Per Page:"
+msgstr ""
+
+#: ctrl-find.php:190
+msgid "Compatible with current WP"
+msgstr ""
+
+#: ctrl-find.php:195
+msgid "Apply Filters"
+msgstr ""
+
+#: ctrl-find.php:196
+msgid "Clear All"
+msgstr ""
+
+#: admin/js/ctrl-find-admin.js:45
+msgid "Clear"
+msgstr ""
+
+#: admin/js/ctrl-find-admin.js:120
+msgid "Showing {count} plugins"
+msgstr ""
+
+#: admin/js/ctrl-find-admin.js:140
+msgid "Active Filters"
+msgstr ""
