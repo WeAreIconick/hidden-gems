@@ -1,10 +1,6 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
-  "preferredVersions": {
-    "php": "7.4",
-    "wp": "5.9"
-  },
   "steps": [
     {
       "step": "login",
