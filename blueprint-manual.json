@@ -1,10 +1,11 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "landingPage": "/wp-admin/plugin-install.php?tab=hidden-gems",
+  "login": true,
   "steps": [
     {
       "step": "runPHP",
-      "code": "<?php\n// Create the plugin directory\n$plugin_dir = WP_PLUGIN_DIR . '/hidden-gems';\nif (!is_dir($plugin_dir)) {\n    mkdir($plugin_dir, 0755, true);\n}\n\n// Download the main plugin file\n$plugin_url = 'https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/hidden-gems.php';\n$plugin_content = file_get_contents($plugin_url);\nif ($plugin_content !== false) {\n    file_put_contents($plugin_dir . '/hidden-gems.php', $plugin_content);\n    echo 'Downloaded main plugin file\\n';\n}\n\n// Download other files if they exist\n$files = ['readme.txt', 'uninstall.php'];\nforeach ($files as $file) {\n    $file_url = 'https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/' . $file;\n    $file_content = file_get_contents($file_url);\n    if ($file_content !== false) {\n        file_put_contents($plugin_dir . '/' . $file, $file_content);\n        echo 'Downloaded ' . $file . '\\n';\n    }\n}\n\n// Activate the plugin\n$plugin_file = 'hidden-gems/hidden-gems.php';\nif (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {\n    activate_plugin($plugin_file);\n    echo 'Plugin activated successfully\\n';\n} else {\n    echo 'Plugin file not found\\n';\n}\n?>"
+      "code": "<?php\n// Create plugin directory\n$plugin_dir = WP_PLUGIN_DIR . '/hidden-gems';\nif (!is_dir($plugin_dir)) {\n    mkdir($plugin_dir, 0755, true);\n}\n\n// Download main plugin file\n$plugin_url = 'https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/hidden-gems.php';\n$plugin_content = file_get_contents($plugin_url);\nif ($plugin_content !== false) {\n    file_put_contents($plugin_dir . '/hidden-gems.php', $plugin_content);\n}\n\n// Download additional files\n$files = ['readme.txt', 'uninstall.php'];\nforeach ($files as $file) {\n    $file_url = 'https://raw.githubusercontent.com/WeAreIconick/hidden-gems/main/' . $file;\n    $file_content = file_get_contents($file_url);\n    if ($file_content !== false) {\n        file_put_contents($plugin_dir . '/' . $file, $file_content);\n    }\n}\n\n// Activate plugin\n$plugin_file = 'hidden-gems/hidden-gems.php';\nif (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {\n    activate_plugin($plugin_file);\n}\n?>"
     }
   ]
 }
