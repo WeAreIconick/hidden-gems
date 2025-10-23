@@ -68,7 +68,4 @@ function ctrl_find_cleanup() {
 // Run cleanup
 ctrl_find_cleanup();
 
-// Log the uninstall (for debugging purposes)
-if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-    error_log( 'Ctrl+Find plugin uninstalled and cleaned up successfully.' );
-}
+// Plugin uninstalled and cleaned up successfully

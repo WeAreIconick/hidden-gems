@@ -499,7 +499,7 @@ class HiddenGems {
         echo '</div>';
         
         // Add aggressive cache busting and use only WordPress core classes
-        $version = time() . rand(1000, 9999);
+        $version = time() . wp_rand(1000, 9999);
         
         // Force cache busting with meta tags
         echo '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">';
@@ -695,7 +695,7 @@ class HiddenGems {
         </style>
         
         <script type="text/javascript">
-        // Cache busted: <?php echo $version; ?>
+        // Cache busted: <?php echo esc_html( $version ); ?>
         console.log('Hidden Gems: Script starting to load...');
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -841,7 +841,7 @@ class HiddenGems {
                 // Load plugins
                 var formData = new FormData();
                 formData.append('action', 'hidden_gems_fetch_plugins');
-                formData.append('nonce', '<?php echo wp_create_nonce( 'hidden_gems_nonce' ); ?>');
+                formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'hidden_gems_nonce' ) ); ?>');
                 
                 console.log('Hidden Gems: Making AJAX request to:', ajaxurl);
                 
@@ -1157,7 +1157,7 @@ class HiddenGems {
                     var formData = new FormData();
                         formData.append('action', 'hidden_gems_get_install_nonce');
                         formData.append('slug', slug);
-                        formData.append('nonce', '<?php echo wp_create_nonce( 'hidden_gems_nonce' ); ?>');
+                        formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'hidden_gems_nonce' ) ); ?>');
                     
                     fetch(ajaxurl, {
                         method: 'POST',
@@ -1270,11 +1270,25 @@ class HiddenGems {
      */
     private function render_filter_interface() {
         // Get current filter values from URL - only gem-finding filters
-        // Note: These are GET parameters for display purposes only, not form submissions
-        $current_max_installs = isset( $_GET['max_installs'] ) ? absint( $_GET['max_installs'] ) : 100000; // Default to 100K for more results
-        $current_min_quality = isset( $_GET['min_quality'] ) ? absint( $_GET['min_quality'] ) : 0; // Default to any rating for more results
-        $current_sort = isset( $_GET['sort'] ) ? sanitize_text_field( wp_unslash( $_GET['sort'] ) ) : 'newest';
-        $current_search = isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '';
+        // These are GET parameters for display purposes only, not form submissions
+        $current_max_installs = 100000; // Default to 100K for more results
+        $current_min_quality = 0; // Default to any rating for more results
+        $current_sort = 'newest';
+        $current_search = '';
+        
+        // Validate and sanitize GET parameters if they exist
+        if ( isset( $_GET['max_installs'] ) && is_numeric( $_GET['max_installs'] ) ) {
+            $current_max_installs = absint( $_GET['max_installs'] );
+        }
+        if ( isset( $_GET['min_quality'] ) && is_numeric( $_GET['min_quality'] ) ) {
+            $current_min_quality = absint( $_GET['min_quality'] );
+        }
+        if ( isset( $_GET['sort'] ) && in_array( $_GET['sort'], array( 'newest', 'rating', 'updated' ) ) ) {
+            $current_sort = sanitize_text_field( wp_unslash( $_GET['sort'] ) );
+        }
+        if ( isset( $_GET['search'] ) ) {
+            $current_search = sanitize_text_field( wp_unslash( $_GET['search'] ) );
+        }
         
         ?>
         <div class="hidden-gems-filters" style="margin: 20px 0; padding: 15px; background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
