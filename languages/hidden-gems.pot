@@ -6,8 +6,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ctrl+Find 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ctrl-find\n"
+"Project-Id-Version: Hidden Gems 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hidden-gems\n"
 "POT-Creation-Date: 2024-01-01 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ctrl-find.php:123
+#: hidden-gems.php:123
 msgid "Loading..."
 msgstr ""
 
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Clear All"
 msgstr ""
 
-#: admin/js/ctrl-find-admin.js:45
+#: admin/js/hidden-gems-admin.js:45
 msgid "Clear"
 msgstr ""
 

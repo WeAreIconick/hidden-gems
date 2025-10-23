@@ -61,11 +61,11 @@ Hidden Gems uses WordPress core functions and hooks exclusively:
 
 = Does this plugin modify core WordPress files? =
 
-No. Ctrl+Find uses only WordPress hooks and filters to extend functionality. It doesn't modify any core files.
+No. Hidden Gems uses only WordPress hooks and filters to extend functionality. It doesn't modify any core files.
 
 = Is it compatible with other plugin management plugins? =
 
-Yes. Ctrl+Find works alongside other plugins and doesn't interfere with their functionality.
+Yes. Hidden Gems works alongside other plugins and doesn't interfere with their functionality.
 
 = Does it work with WordPress multisite? =
 
@@ -113,4 +113,4 @@ Yes. The plugin follows WordPress accessibility guidelines and works with screen
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Ctrl+Find with advanced plugin filtering capabilities.
+Initial release of Hidden Gems with advanced plugin filtering capabilities.
