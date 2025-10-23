@@ -1277,17 +1277,25 @@ class HiddenGems {
         $current_search = '';
         
         // Validate and sanitize GET parameters if they exist
-        if ( isset( $_GET['max_installs'] ) && is_numeric( $_GET['max_installs'] ) ) {
-            $current_max_installs = absint( $_GET['max_installs'] );
+        // These are URL parameters for display purposes, not form submissions
+        $max_installs_param = filter_input( INPUT_GET, 'max_installs', FILTER_VALIDATE_INT );
+        if ( false !== $max_installs_param && $max_installs_param > 0 ) {
+            $current_max_installs = $max_installs_param;
         }
-        if ( isset( $_GET['min_quality'] ) && is_numeric( $_GET['min_quality'] ) ) {
-            $current_min_quality = absint( $_GET['min_quality'] );
+        
+        $min_quality_param = filter_input( INPUT_GET, 'min_quality', FILTER_VALIDATE_INT );
+        if ( false !== $min_quality_param && $min_quality_param >= 0 ) {
+            $current_min_quality = $min_quality_param;
         }
-        if ( isset( $_GET['sort'] ) && in_array( $_GET['sort'], array( 'newest', 'rating', 'updated' ) ) ) {
-            $current_sort = sanitize_text_field( wp_unslash( $_GET['sort'] ) );
+        
+        $sort_param = filter_input( INPUT_GET, 'sort', FILTER_SANITIZE_STRING );
+        if ( $sort_param && in_array( $sort_param, array( 'newest', 'rating', 'updated' ), true ) ) {
+            $current_sort = $sort_param;
         }
-        if ( isset( $_GET['search'] ) ) {
-            $current_search = sanitize_text_field( wp_unslash( $_GET['search'] ) );
+        
+        $search_param = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_STRING );
+        if ( $search_param ) {
+            $current_search = $search_param;
         }
         
         ?>
