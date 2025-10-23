@@ -3,7 +3,10 @@
  * Plugin Name: Hidden Gems
  * Description: Discover high-quality WordPress plugins that haven't been widely adopted yet
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Iconick
+ * Author URI: https://iconick.io
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 // Prevent direct access
@@ -49,7 +52,7 @@ class HiddenGems {
         $screen = get_current_screen();
         if ( $screen && 'plugin-install' === $screen->id ) {
             // Add aggressive cache busting
-            $version = time() . rand(1000, 9999);
+            $version = time() . wp_rand(1000, 9999);
             
             // Add cache-busting headers
             header( 'Cache-Control: no-cache, no-store, must-revalidate' );
@@ -127,27 +130,18 @@ class HiddenGems {
             ]
         ]);
         
-        // Log the URL being called for debugging
-        error_log( 'Hidden Gems API: Calling URL: ' . $full_url );
-        
         // Use file_get_contents with stream context for maximum timeout control
         $response_data = @file_get_contents( $full_url, false, $context );
         
         if ( $response_data === false ) {
-            error_log( 'Hidden Gems API Error: Failed to fetch data from WordPress.org API - URL: ' . $full_url );
             return false;
         }
-        
-        error_log( 'Hidden Gems API: Got response data, length: ' . strlen( $response_data ) );
         
         $data = json_decode( $response_data, true );
         
         if ( ! $data || ! isset( $data['plugins'] ) ) {
-            error_log( 'Hidden Gems API Response: Invalid JSON or no plugins - Data: ' . substr( $response_data, 0, 500 ) );
             return false;
         }
-        
-        error_log( 'Hidden Gems API: Successfully parsed ' . count( $data['plugins'] ) . ' plugins' );
         
         return $data['plugins'];
     }
@@ -215,7 +209,6 @@ class HiddenGems {
         ) );
         
         if ( is_wp_error( $response ) ) {
-            error_log( 'Hidden Gems API Error: ' . $response->get_error_message() );
             return false;
         }
         
@@ -223,7 +216,6 @@ class HiddenGems {
         $data = json_decode( $body, true );
         
         if ( ! $data || ! isset( $data['plugins'] ) ) {
-            error_log( 'Hidden Gems API Response: ' . $body );
             return false;
         }
         
@@ -234,12 +226,9 @@ class HiddenGems {
      * AJAX handler for fetching plugins from WordPress.org API
      */
     public function ajax_fetch_plugins() {
-        error_log( 'Hidden Gems: AJAX handler called' );
-        
         check_ajax_referer( 'hidden_gems_nonce', 'nonce' );
         
         if ( ! current_user_can( 'install_plugins' ) ) {
-            error_log( 'Hidden Gems: Insufficient permissions' );
             wp_die( 'Insufficient permissions' );
         }
         
@@ -248,7 +237,6 @@ class HiddenGems {
         $cached_plugins = get_transient( $cache_key );
         
         if ( false !== $cached_plugins ) {
-            error_log( 'Hidden Gems: Returning cached plugins: ' . count( $cached_plugins ) );
             wp_send_json_success( array(
                 'plugins' => $cached_plugins,
                 'count' => count( $cached_plugins ),
@@ -256,8 +244,6 @@ class HiddenGems {
             ) );
             return;
         }
-        
-        error_log( 'Hidden Gems: No cache found, making API call' );
         
         // Get pagination parameters
         $page = isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
@@ -279,20 +265,40 @@ class HiddenGems {
             wp_send_json_success( $result );
         }
         
-        // ULTRA-SIMPLE: Just ONE API call to newest plugins (hidden gems)
+        // Get more plugins from multiple sources to find more hidden gems
         $all_plugins = array();
         
-        // Single call to newest plugins - these are the real hidden gems
+        // Get newest plugins (the real hidden gems)
         $new_plugins = $this->fetch_plugins_from_api( array(
-            'per_page' => 500, // Get lots of plugins in one call
+            'per_page' => 500,
             'browse' => 'new'
         ) );
         
         if ($new_plugins && is_array($new_plugins)) {
-            $all_plugins = $new_plugins;
+            $all_plugins = array_merge($all_plugins, $new_plugins);
         }
         
-        // Remove duplicates and limit to 1000 total
+        // Get recently updated plugins (might be hidden gems too)
+        $updated_plugins = $this->fetch_plugins_from_api( array(
+            'per_page' => 500,
+            'browse' => 'updated'
+        ) );
+        
+        if ($updated_plugins && is_array($updated_plugins)) {
+            $all_plugins = array_merge($all_plugins, $updated_plugins);
+        }
+        
+        // Get some popular plugins with lower install counts (might have hidden gems)
+        $popular_plugins = $this->fetch_plugins_from_api( array(
+            'per_page' => 500,
+            'browse' => 'popular'
+        ) );
+        
+        if ($popular_plugins && is_array($popular_plugins)) {
+            $all_plugins = array_merge($all_plugins, $popular_plugins);
+        }
+        
+        // Remove duplicates and limit to 2000 total for more variety
         $unique_plugins = array();
         $seen_slugs = array();
         
@@ -300,7 +306,7 @@ class HiddenGems {
             if (!in_array($plugin['slug'], $seen_slugs)) {
                 $unique_plugins[] = $plugin;
                 $seen_slugs[] = $plugin['slug'];
-                if (count($unique_plugins) >= 1000) {
+                if (count($unique_plugins) >= 2000) {
                     break;
                 }
             }
@@ -318,8 +324,6 @@ class HiddenGems {
         
         // Cache the results for 30 minutes to prevent repeated API calls
         set_transient( $cache_key, $plugins, 30 * MINUTE_IN_SECONDS );
-        
-        error_log( 'Hidden Gems: Returning ' . count( $plugins ) . ' plugins to frontend' );
         
         wp_send_json_success( array(
             'plugins' => $plugins,
@@ -455,7 +459,7 @@ class HiddenGems {
             wp_die( 'Insufficient permissions' );
         }
         
-        $slug = sanitize_text_field( $_POST['slug'] );
+        $slug = isset( $_POST['slug'] ) ? sanitize_text_field( wp_unslash( $_POST['slug'] ) ) : '';
         $install_url = wp_nonce_url( admin_url( "update.php?action=install-plugin&plugin=" . $slug ), "install-plugin_" . $slug );
         
         wp_send_json_success( array(
@@ -467,7 +471,6 @@ class HiddenGems {
      * Test AJAX endpoint
      */
     public function ajax_test() {
-        error_log( 'Hidden Gems: Test endpoint called' );
         wp_send_json_success( array( 'message' => 'AJAX is working!' ) );
     }
     
@@ -504,7 +507,7 @@ class HiddenGems {
         echo '<meta http-equiv="Expires" content="0">';
         ?>
         <style>
-        /* Cache busted: <?php echo $version; ?> */
+        /* Cache busted: <?php echo esc_html( $version ); ?> */
         #plugin-results {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -590,41 +593,46 @@ class HiddenGems {
             cursor: not-allowed;
         }
         
-        /* Loading state styling - break out of grid and center */
+        /* Loading state styling - absolutely positioned and centered */
         .hidden-gems-loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            color: #646970;
-            font-size: 16px;
-            font-weight: 500;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-            min-width: 300px;
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 40px !important;
+            color: #646970 !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            text-align: center !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+            z-index: 99999 !important;
+            min-width: 300px !important;
+            max-width: 400px !important;
+            border: 1px solid #c3c4c7 !important;
         }
         
         .hidden-gems-loading .spinner {
             margin-bottom: 15px;
         }
         
-        /* Break loading state out of grid completely */
-        #plugin-results .hidden-gems-loading {
+        /* Break loading state out of grid completely - override any conflicting styles */
+        #plugin-results .hidden-gems-loading,
+        .hidden-gems-loading {
             position: fixed !important;
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
             grid-column: none !important;
             margin: 0 !important;
-            z-index: 9999 !important;
+            z-index: 99999 !important;
+            width: auto !important;
+            height: auto !important;
         }
         
         /* Mobile responsiveness */
@@ -788,7 +796,7 @@ class HiddenGems {
                 console.log('Hidden Gems: Testing AJAX connection...');
                 var testData = new FormData();
                 testData.append('action', 'hidden_gems_test');
-                testData.append('nonce', '<?php echo wp_create_nonce( 'hidden_gems_nonce' ); ?>');
+                testData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'hidden_gems_nonce' ) ); ?>');
                 
                 fetch(ajaxurl, {
                     method: 'POST',
@@ -1000,12 +1008,14 @@ class HiddenGems {
                             html += '<img src="' + icon + '" class="plugin-icon" alt=""> ';
                         }
                         html += plugin.name + '</a>';
-                        if (isNewGem) {
-                            html += ' <span style="background: #ff6b6b; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">⭐ Super Hidden Gem</span>';
-                        } else if (isHiddenGem) {
-                            html += ' <span style="background: #ffd700; color: #000; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">💎 Hidden Gem</span>';
-                        }
                         html += '</h3>';
+                        
+                        // Move badges to their own line to prevent cutoff
+                        if (isNewGem) {
+                            html += '<div style="margin-top: 5px;"><span style="background: #ff6b6b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; display: inline-block;">⭐ Super Hidden Gem</span></div>';
+                        } else if (isHiddenGem) {
+                            html += '<div style="margin-top: 5px;"><span style="background: #ffd700; color: #000; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; display: inline-block;">💎 Hidden Gem</span></div>';
+                        }
                         html += '</div>';
                         html += '<div class="action-links">';
                         html += '<ul class="plugin-action-buttons">';
@@ -1260,6 +1270,7 @@ class HiddenGems {
      */
     private function render_filter_interface() {
         // Get current filter values from URL - only gem-finding filters
+        // Note: These are GET parameters for display purposes only, not form submissions
         $current_max_installs = isset( $_GET['max_installs'] ) ? absint( $_GET['max_installs'] ) : 100000; // Default to 100K for more results
         $current_min_quality = isset( $_GET['min_quality'] ) ? absint( $_GET['min_quality'] ) : 0; // Default to any rating for more results
         $current_sort = isset( $_GET['sort'] ) ? sanitize_text_field( wp_unslash( $_GET['sort'] ) ) : 'newest';
